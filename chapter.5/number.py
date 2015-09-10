@@ -54,6 +54,7 @@ print '---------' * 5
 # ascii conversion
 print ord('a'), ord('A')
 print chr(97), chr(65)
+# print chr(12345)  # ValueError: chr() arg not in range(256)
 print unichr(97)
 
 print '---------' * 5
