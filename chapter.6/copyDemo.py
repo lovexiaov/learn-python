@@ -46,5 +46,3 @@ wife[1][1] = 150.00
 
 print husband, wife
 
-
-
