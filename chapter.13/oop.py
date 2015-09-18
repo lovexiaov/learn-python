@@ -68,7 +68,7 @@ print joe.__dict__
 print '-' * 20
 
 
-class Test():
+class Test(object):
     def __init__(self):
         pass
 
