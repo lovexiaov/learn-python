@@ -20,7 +20,11 @@ class Retriever(object):  # download web pages
         parsedurl = urlparse(url, 'http:', 0)
         path = parsedurl[1] + parsedurl[2]
         ext = splitext(path)
-        if ext[1] == '':
+        if find(ext[1], '#'):
+            path = path[:find(path, '#')]
+            pass
+
+        if ext[1] == '' or ext[1] == '.com' or ext[1] == '.net':
             if path[-1] == '/':
                 path += defaultname
             else:
