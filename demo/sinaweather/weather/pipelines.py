@@ -30,8 +30,13 @@ class WeatherPipeline(object):
             dd = item[1]
             nd = item[2]
             ta = item[3].split('/')
-            dt = ta[0]
-            nt = ta[1]
+            if len(ta) == 2:
+                dt = ta[0]
+                nt = ta[1]
+            else:
+                dt = u'null'
+                nt = ta[0]
+
             txt = 'date:{0}\t\tday:{1}({2})\t\tnight:{3}({4})\n\n'.format(
                 d,
                 dd.encode('utf-8'),

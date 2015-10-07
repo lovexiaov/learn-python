@@ -71,7 +71,7 @@ weather/spiders/: 放置spider代码的目录.
 Item 是保存爬取到的数据的容器；其使用方法和python字典类似，并且提供了额外保护机制来避免拼写错误导致的未定义字段错误。
 
 首先根据需要从weather.sina.com.cn获取到的数据对item进行建模。 我们需要从weather.sina.com.cn中获取当前城市名，后续9天的日期，天气描述和温度等信息。对此，在item中定义相应的字段。编辑 weather 目录中的 items.py 文件:
-
+```python
 # -*- coding: utf-8 -*-
 
 # Define here the models for your scraped items
@@ -91,6 +91,7 @@ class WeatherItem(scrapy.Item):
     dayDesc = scrapy.Field()
     dayTemp = scrapy.Field()
     pass
+```
 4. 编写获取天气数据的爬虫(Spider)
 
 Spider是用户编写用于从单个网站(或者一些网站)爬取数据的类。
@@ -106,7 +107,7 @@ start_urls: 包含了Spider在启动时进行爬取的url列表。因此，第�
 parse() 是spider的一个方法。 被调用时，每个初始URL完成下载后生成的 Response 对象将会作为唯一的参数传递给该函数。 该方法负责解析返回的数据(response data)，提取数据(生成item)以及生成需要进一步处理的URL的 Request 对象。
 
 我们通过浏览器的查看源码工具先来分析一下需要获取的数据网源代码：
-
+```html
 <h4 class="slider_ct_name" id="slider_ct_name">武汉</h4>
 ...
 <div class="blk_fc_c0_scroll" id="blk_fc_c0_scroll" style="width: 1700px;">
@@ -141,6 +142,7 @@ parse() 是spider的一个方法。 被调用时，每个初始URL完成下载�
     </div>
     ...
 </div>
+```
 我们可以看到：
 
 城市名可以通过获取id为slider_ct_name的h4元素获取
@@ -148,7 +150,7 @@ parse() 是spider的一个方法。 被调用时，每个初始URL完成下载�
 天气描述可以通过获取id为blk_fc_c0_scroll下的class为icons0_wt的img元素获取
 温度可以通过获取id为blk_fc_c0_scroll下的class为wt_fc_c0_i_temp的p元素获取
 因此，我们的Spider代码如下，保存在 weather/spiders 目录下的 localweather.py 文件中:
-
+```python
 # -*- coding: utf-8 -*-
 import scrapy
 from weather.items import WeatherItem
@@ -167,6 +169,7 @@ class WeatherSpider(scrapy.Spider):
         item['dayDesc'] = tenDay.css('img.icons0_wt::attr(title)').extract()
         item['dayTemp'] = tenDay.css('p.wt_fc_c0_i_temp::text').extract()
         return item
+```
 代码中的xpath和css后面括号的内容为选择器，关于xpath和css选择器的内容可参考官方教程：http://doc.scrapy.org/en/0.24/topics/selectors.html
 
 5. 运行爬虫，对数据进行验证
@@ -205,7 +208,7 @@ item pipeline的典型应用有：
 我们这里把数据转码后保存在 wea.txt 文本中。
 
 pipelines.py文件在创建项目时已经自动被创建好了，我们在其中加上保存到文件的代码：
-
+```python
 # -*- coding: utf-8 -*-
 
 # Define your item pipelines here
@@ -249,6 +252,7 @@ class WeatherPipeline(object):
             )
             self.file.write(txt)
         return item
+```
 代码比较简单，都是python比较基础的语法，如果您感觉比较吃力，建议先去学一下python基础课。
 
 7. 把 ITEM_PIPELINES 添加到设置中
@@ -261,7 +265,7 @@ ITEM_PIPELINES = {
 另外，有些网站对网络爬虫进行了阻止（注：本项目仅从技术角度处理此问题，个人强烈不建议您用爬虫爬取有版权信息的数据），我们可以在设置中修改一下爬虫的 USER_AGENT 和 Referer 信息，增加爬虫请求的时间间隔。
 
 整个 settings.py 文件内容如下：
-
+```python
 # -*- coding: utf-8 -*-
 
 # Scrapy settings for weather project
@@ -290,6 +294,7 @@ ITEM_PIPELINES = {
 }
 
 DOWNLOAD_DELAY = 0.5
+```
 到现在为止，代码主要部分已经写完了。
 
 8. 运行爬虫
@@ -333,7 +338,7 @@ $ tar -zxvf beautifulsoup4-4.3.2.tar.gz
 $ cd beautifulsoup4-4.3.2
 $ sudo python setup.py install
 安装成功后，优化WeatherSpider代码，改进后的代码如下：
-
+```python
 # -*- coding: utf-8 -*-
 import scrapy
 from bs4 import BeautifulSoup
@@ -367,6 +372,7 @@ class WeatherSpider(scrapy.Spider):
                 else:
                     item[att].append(obj.text)
         return item
+```
 然后再次运行爬虫:
 
 $ scrapy crawl myweather
