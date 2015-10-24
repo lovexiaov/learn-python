@@ -2,3 +2,8 @@
 
 # tmp files
 *.tmp
+*.txt
+*.csv
+*.log
+*.xml
+!result.xml

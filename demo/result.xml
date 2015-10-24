@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+<httpSample t="349" lt="349" s="true" rm="OK" tn="线程组 1-1" dt="text" by="295" ng="1" na="1">
+  <responseData class="java.lang.String">{"error_code":0,"gadget_id":"399a6b57de660b9acc82ddd1209bc9fd2315130a","gadget_key":"399a6b57de660b9acc82ddd1209bc9fd2315130a"}</responseData>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">POST</method>
+  <queryString class="java.lang.String">{
+	"gadget_type_id":"10000",
+	"gadget_vendor":"camera_vendor_1",
+	"gadget_mac":"10000000001",
+	"gadget_privacy_data":"10000000001"
+}</queryString>
+</httpSample>
+<httpSample t="111" lt="111" s="true" rm="OK" tn="线程组 1-2" dt="text" by="295" ng="1" na="1">
+  <responseData class="java.lang.String">{"error_code":0,"gadget_id":"1b4eef939be3816c68f35f9eaa5009552f6df8ca","gadget_key":"1b4eef939be3816c68f35f9eaa5009552f6df8ca"}</responseData>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">POST</method>
+  <queryString class="java.lang.String">{
+	"gadget_type_id":"10000",
+	"gadget_vendor":"camera_vendor_1",
+	"gadget_mac":"10000000002",
+	"gadget_privacy_data":"10000000002"
+}</queryString>
+</httpSample>
+</testResults>
